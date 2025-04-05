@@ -2,7 +2,7 @@
 // Carlos Maziero, DINF/UFPR, Out 2024
 // Definição da interface
 
-// NÃO ALTERAR
+// NAO ALTERAR
 
 #ifndef FPRIO
 #define FPRIO
