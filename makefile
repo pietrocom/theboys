@@ -7,28 +7,35 @@ LDLIBS  = -lm
 MAIN    = theboys
 ENTREGA = $(MAIN)
 
-# lista de arquivos de cabeçalho (a completar)
-HDR = lista.h fprio.h conjunto.h
+HDR = lista.h fprio.h eventos.h conjunto.h entidades.h auxiliares.h
 
-# lista de arquivos-objeto (a completar)
-# não inclua conjunto.o, senão ele será removido com "make clean"
-OBJ = lista.o fprio.o theboys.o
+# lista de arquivos-objeto (sem conjunto.o)
+OBJ = lista.o fprio.o eventos.o entidades.o auxiliares.o
 
-# construir o executável
 $(MAIN): $(MAIN).o $(OBJ) conjunto.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LDLIBS)
 
-# construir os arquivos-objeto (a completar)
+# construir o arquivo principal
 $(MAIN).o: $(MAIN).c $(HDR)
 
-# construir os TADs
 lista.o: lista.c lista.h
-fprio.o: fprio.c fprio.h
+	$(CC) $(CFLAGS) -c $<
 
-# executar
+fprio.o: fprio.c fprio.h
+	$(CC) $(CFLAGS) -c $<
+
+entidades.o: entidades.c $(HDR)
+	$(CC) $(CFLAGS) -c $<
+
+eventos.o: eventos.c $(HDR)
+	$(CC) $(CFLAGS) -c $<
+
+auxiliares.o: auxiliares.c $(HDR)
+	$(CC) $(CFLAGS) -c $<
+
 run: $(MAIN)
 	./$(MAIN)
 
-# testar no Valgrind
 valgrind: $(MAIN)
 	valgrind --leak-check=full --track-origins=yes ./$(MAIN)
 
@@ -36,12 +43,12 @@ valgrind: $(MAIN)
 tgz: clean
 	-mkdir -p /tmp/$(USER)/$(ENTREGA)
 	chmod 0700 /tmp/$(USER)/$(ENTREGA)
-	cp *.c *.h makefile /tmp/$(USER)/$(ENTREGA)
+	cp *.c *.h makefile conjunto.o /tmp/$(USER)/$(ENTREGA)
 	tar czvf $(ENTREGA).tgz -C /tmp/$(USER) $(ENTREGA)
 	rm -rf /tmp/$(USER)
 	@echo "Arquivo $(ENTREGA).tgz criado para entrega"
 
 # limpar arquivos temporários
 clean:
-	rm -f *~ $(OBJ) $(MAIN) /tmp/$(USER)/$(ENTREGA) $(ENTREGA).tgz
+	rm -f *~ $(OBJ) $(MAIN).o $(MAIN) $(ENTREGA).tgz
 

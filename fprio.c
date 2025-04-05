@@ -23,14 +23,16 @@ struct fprio_t *fprio_destroi (struct fprio_t *f) {
 	while (aux != NULL) {
 		f->prim = aux->prox;
 		if (aux->item != NULL)
-			free(aux->item);
-		free(aux);
-		aux = f->prim;
+			free(aux->item);  
+		free(aux);  
+	aux = f->prim;
 	}
-	free(f);
-	f = NULL;
-	return NULL;
+
+	free(f);  
+	f = NULL;  
+	return NULL;  
 }
+
 
 // Retorna 1 caso os itens sejam iguais
 int item_repetido (void *item_1, void *item_2) {
@@ -45,13 +47,6 @@ int fprio_insere(struct fprio_t *f, void *item, int tipo, int prio) {
 
 	struct fpnodo_t *aux = f->prim;
 
-	// Testa insercao de mesmo item
-	while (aux != NULL) {
-		if (aux->item == item)
-			return -1;
-		aux = aux->prox;
-	}
-
 	struct fpnodo_t *novo = malloc(sizeof(struct fpnodo_t));
 	if (!novo)
 		return -1;
@@ -61,14 +56,12 @@ int fprio_insere(struct fprio_t *f, void *item, int tipo, int prio) {
 	novo->prio = prio;
 	novo->prox = NULL;
 
-	// Verifica se a lista está vazia ou se novo deve ser o primeiro
 	if (f->prim == NULL || prio < f->prim->prio) {
 		novo->prox = f->prim;
 		f->prim = novo;
 		return f->num++;  
 	}
 	
-	// Reinicia o auxiliar
 	aux = f->prim;
 
 	while (aux->prox != NULL && aux->prox->prio <= prio)
@@ -93,8 +86,10 @@ void *fprio_retira (struct fprio_t *f, int *tipo, int *prio) {
 	f->num--;
 
 	// Atribui valores somente se tipo e prio forem ponteiros válidos
-	if (tipo != NULL) *tipo = aux->tipo;
-	if (prio != NULL) *prio = aux->prio;
+	if (tipo != NULL) 
+		*tipo = aux->tipo;
+	if (prio != NULL) 
+		*prio = aux->prio;
 
 	free(aux);
 	return item;		
