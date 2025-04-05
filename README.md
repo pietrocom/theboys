@@ -1,7 +1,6 @@
 # The Boys - Superhero Simulation (2024/2)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/pietrocom/theboys)
-![GitHub repo size](https://img.shields.io/github/repo-size/pietrocom/theboys)
 
 A discrete event simulation of a superhero world with heroes, bases, and missions - originally conceived by Profs. Fabiano Silva, Luis Bona, and Marcos Castilho for CI1001/CI067 courses at UFPR.
 
